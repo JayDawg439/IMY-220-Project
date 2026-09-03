@@ -1,0 +1,14 @@
+services:
+  backend:
+    build: ./backend
+    container_name: obscura-backend
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./frontend
+    container_name: obscura-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
