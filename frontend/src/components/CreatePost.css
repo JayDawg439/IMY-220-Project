@@ -1,0 +1,32 @@
+.create-post {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #e5e5e5;
+  padding: 16px;
+  max-width: 360px;
+}
+
+.create-post label {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  gap: 4px;
+}
+
+.create-post-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.create-post button {
+  padding: 8px 14px;
+  border: none;
+  cursor: pointer;
+  background: #1a1a1a;
+  color: white;
+}
+
+.create-post button[type="button"] {
+  background: #999;
+}

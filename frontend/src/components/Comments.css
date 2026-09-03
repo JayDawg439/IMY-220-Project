@@ -1,0 +1,35 @@
+.comments-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  max-height: 140px;
+  overflow-y: auto;
+}
+.comment-user {
+  font-weight: 600;
+  margin-right: 4px;
+}
+.comments-empty {
+  color: #888;
+  font-style: italic;
+}
+.comments-add {
+  display: flex;
+  gap: 6px;
+}
+.comments-add input {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ccc;
+}
+.comments-add button {
+  border: none;
+  background: #1a1a1a;
+  color: white;
+  padding: 0 12px;
+  cursor: pointer;
+}

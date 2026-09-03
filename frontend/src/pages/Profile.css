@@ -1,0 +1,116 @@
+.profile-page {
+  display: flex;
+  min-height: 100vh;
+}
+
+.profile-main {
+  flex: 1;
+  padding: 20px 24px;
+  background: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-top {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.profile-info {
+  background: #e5e5e5;
+  padding: 16px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-avatars {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.profile-avatars img {
+  width: 90px;
+  height: 90px;
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+}
+
+.profile-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.profile-table td {
+  border: 1px solid #ccc;
+  padding: 6px 8px;
+}
+
+.profile-table td:first-child {
+  font-weight: 700;
+  width: 90px;
+}
+
+.profile-table-toggle {
+  cursor: pointer;
+  user-select: none;
+}
+
+.profile-table-toggle:hover {
+  text-decoration: underline;
+}
+
+.profile-table-toggle.active {
+  color: #1a1a1a;
+  background: #d0d0d0;
+}
+
+.profile-bio-links {
+  display: flex;
+  gap: 8px;
+}
+
+.profile-bio-links-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  min-width: 0;
+}
+
+.profile-bio-links-label {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.profile-actions button {
+  flex: 1;
+  border: none;
+  background: #1a1a1a;
+  color: white;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.profile-photo-grid {
+  flex: 1;
+  min-width: 280px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}

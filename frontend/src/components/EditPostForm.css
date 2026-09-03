@@ -1,0 +1,28 @@
+.edit-post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #d8d8d8;
+  padding: 12px;
+}
+.edit-post-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  gap: 4px;
+}
+.edit-post-actions {
+  display: flex;
+  gap: 8px;
+}
+.edit-post-actions button {
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  background: #1a1a1a;
+  color: white;
+  font-size: 12px;
+}
+.edit-post-actions button[type="button"] {
+  background: #999;
+}

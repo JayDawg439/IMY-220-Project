@@ -1,0 +1,28 @@
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #e5e5e5;
+  padding: 16px;
+  max-width: 360px;
+}
+.edit-profile-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  gap: 4px;
+}
+.edit-profile-actions {
+  display: flex;
+  gap: 8px;
+}
+.edit-profile-actions button {
+  padding: 8px 14px;
+  border: none;
+  cursor: pointer;
+  background: #1a1a1a;
+  color: white;
+}
+.edit-profile-actions button[type="button"] {
+  background: #999;
+}
