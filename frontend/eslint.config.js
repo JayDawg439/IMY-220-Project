@@ -17,5 +17,11 @@ export default defineConfig([
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
+    rules: {
+      // Loading flags are set when an effect starts fetching - intentional here.
+      'react-hooks/set-state-in-effect': 'off',
+      // The auth context file exports both a provider and its hook.
+      'react-refresh/only-export-components': 'off',
+    },
   },
 ])

@@ -1,7 +1,3 @@
-// dummyData.js
-// Central source of fake data for D1. In later deliverables this will be
-// replaced by real API calls to the Express backend + MongoDB.
-
 export const currentUser = {
   id: "u1",
   name: "Alex Rivera",
@@ -48,8 +44,6 @@ export const dummyPosts = [
     likes: 12, comments: [], feed: "friends" },
 ];
 
-// A user's own posts, shown on their Profile page
 export const dummyProfilePosts = dummyPosts.filter(p => p.authorId === "u1");
 
-// A single post used for the Post page (dynamic route will pick the real one later)
 export const dummySinglePost = dummyPosts[0];

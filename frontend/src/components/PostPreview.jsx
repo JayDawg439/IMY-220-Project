@@ -1,15 +1,17 @@
 import { Link } from 'react-router-dom';
-import './PostPreview.css';
 
-function PostPreview({ post }) {
+function PostPreview({ post, children }) {
   return (
-    <Link to={`/post/${post.id}`} className="post-preview">
-      <img src={post.imageUrl} alt={post.caption} className="post-preview-image" />
-      <div className="post-preview-footer">
-        <img src={post.authorAvatar} alt={post.authorName} className="post-preview-avatar" />
-        <span className="post-preview-caption">{post.caption}</span>
-      </div>
-    </Link>
+    <div className="group flex flex-col overflow-hidden border border-edge bg-panel transition hover:border-neon">
+      <Link to={`/post/${post.id}`} className="flex flex-col">
+        <img src={post.imageUrl} alt={post.caption || 'post'} className="aspect-square w-full bg-panel-2 object-cover" loading="lazy" />
+        <div className="flex items-center gap-2 px-2 py-2">
+          <img src={post.author.avatarUrl} alt={post.author.username} className="size-6 rounded-full border border-neon/50 object-cover" />
+          <span className="truncate text-xs text-ink">{post.caption || `@${post.author.username}`}</span>
+        </div>
+      </Link>
+      {children}
+    </div>
   );
 }
 

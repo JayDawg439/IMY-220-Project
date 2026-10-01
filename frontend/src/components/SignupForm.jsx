@@ -1,46 +1,28 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AuthForms.css';
+import { useAuth } from '../context/AuthContext';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const USERNAME_REGEX = /^[a-zA-Z0-9_]{3,20}$/;
 
 function SignupForm() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [touched, setTouched] = useState({
-    username: false, email: false, password: false, confirmPassword: false,
-  });
+  const { signup } = useAuth();
+  const [form, setForm] = useState({ username: '', email: '', password: '', confirmPassword: '' });
+  const [touched, setTouched] = useState({});
   const [submitError, setSubmitError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+
+  const set = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
+  const blur = (field) => () => setTouched((t) => ({ ...t, [field]: true }));
 
   const errors = {
-    username: !username
-      ? 'Username is required.'
-      : username.length < 3
-      ? 'Username must be at least 3 characters.'
-      : '',
-    email: !email
-      ? 'Email is required.'
-      : !EMAIL_REGEX.test(email)
-      ? 'Enter a valid email address.'
-      : '',
-    password: !password
-      ? 'Password is required.'
-      : password.length < 6
-      ? 'Password must be at least 6 characters.'
-      : '',
-    confirmPassword: !confirmPassword
-      ? 'Please confirm your password.'
-      : confirmPassword !== password
-      ? 'Passwords do not match.'
-      : '',
+    username: !form.username ? 'Username is required.' : !USERNAME_REGEX.test(form.username) ? '3-20 characters: letters, numbers, underscores.' : '',
+    email: !form.email ? 'Email is required.' : !EMAIL_REGEX.test(form.email) ? 'Enter a valid email address.' : '',
+    password: !form.password ? 'Password is required.' : form.password.length < 6 ? 'Password must be at least 6 characters.' : '',
+    confirmPassword: !form.confirmPassword ? 'Please confirm your password.' : form.confirmPassword !== form.password ? 'Passwords do not match.' : '',
   };
-
-  const isValid = Object.values(errors).every(msg => msg === '');
-
-  const handleBlur = (field) => setTouched(t => ({ ...t, [field]: true }));
+  const isValid = Object.values(errors).every((m) => m === '');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,73 +30,37 @@ function SignupForm() {
     if (!isValid) return;
 
     setSubmitError('');
+    setSubmitting(true);
     try {
-      const res = await fetch('http://localhost:5000/api/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password }),
-      });
-      const data = await res.json();
-      console.log('Signup response:', data);
+      await signup(form.username, form.email, form.password);
       navigate('/home');
     } catch (err) {
-      console.error('Signup failed:', err);
-      setSubmitError('Something went wrong. Please try again.');
+      setSubmitError(err.message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
+  const fields = [
+    ['username', 'Username', 'text'],
+    ['email', 'Email', 'email'],
+    ['password', 'Password', 'password'],
+    ['confirmPassword', 'Confirm Password', 'password'],
+  ];
+
   return (
-    <form className="auth-form" onSubmit={handleSubmit} noValidate>
-      <label>
-        Username
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          onBlur={() => handleBlur('username')}
-        />
-        {touched.username && errors.username && (
-          <span className="auth-error">{errors.username}</span>
-        )}
-      </label>
-      <label>
-        Email
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onBlur={() => handleBlur('email')}
-        />
-        {touched.email && errors.email && (
-          <span className="auth-error">{errors.email}</span>
-        )}
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onBlur={() => handleBlur('password')}
-        />
-        {touched.password && errors.password && (
-          <span className="auth-error">{errors.password}</span>
-        )}
-      </label>
-      <label>
-        Confirm Password
-        <input
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          onBlur={() => handleBlur('confirmPassword')}
-        />
-        {touched.confirmPassword && errors.confirmPassword && (
-          <span className="auth-error">{errors.confirmPassword}</span>
-        )}
-      </label>
-      {submitError && <span className="auth-error">{submitError}</span>}
-      <button type="submit" disabled={!isValid}>SIGN UP</button>
+    <form onSubmit={handleSubmit} noValidate className="flex w-72 flex-col gap-3 border border-neon bg-void p-5 shadow-[0_0_20px_#39ff1433]">
+      {fields.map(([name, label, type]) => (
+        <label key={name} className="label">
+          {label}
+          <input type={type} value={form[name]} onChange={set(name)} onBlur={blur(name)} className="field" />
+          {touched[name] && errors[name] && <span className="error-text">{errors[name]}</span>}
+        </label>
+      ))}
+      {submitError && <span className="error-text">{submitError}</span>}
+      <button type="submit" disabled={!isValid || submitting} className="btn mt-1">
+        {submitting ? 'CREATING...' : 'SIGN UP'}
+      </button>
     </form>
   );
 }

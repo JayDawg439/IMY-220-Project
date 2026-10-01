@@ -1,32 +1,24 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './AuthForms.css';
+import { useAuth } from '../context/AuthContext';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function LoginForm() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [touched, setTouched] = useState({ email: false, password: false });
   const [submitError, setSubmitError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const errors = {
-    email: !email
-      ? 'Email is required.'
-      : !EMAIL_REGEX.test(email)
-      ? 'Enter a valid email address.'
-      : '',
-    password: !password
-      ? 'Password is required.'
-      : password.length < 6
-      ? 'Password must be at least 6 characters.'
-      : '',
+    email: !email ? 'Email is required.' : !EMAIL_REGEX.test(email) ? 'Enter a valid email address.' : '',
+    password: !password ? 'Password is required.' : password.length < 6 ? 'Password must be at least 6 characters.' : '',
   };
-
   const isValid = !errors.email && !errors.password;
-
-  const handleBlur = (field) => setTouched(t => ({ ...t, [field]: true }));
+  const handleBlur = (field) => setTouched((t) => ({ ...t, [field]: true }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,49 +26,33 @@ function LoginForm() {
     if (!isValid) return;
 
     setSubmitError('');
+    setSubmitting(true);
     try {
-      const res = await fetch('http://localhost:5000/api/signin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-      const data = await res.json();
-      console.log('Login response:', data);
+      await login(email, password);
       navigate('/home');
     } catch (err) {
-      console.error('Login failed:', err);
-      setSubmitError('Something went wrong. Please try again.');
+      setSubmitError(err.message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-    <form className="auth-form" onSubmit={handleSubmit} noValidate>
-      <label>
+    <form onSubmit={handleSubmit} noValidate className="flex w-72 flex-col gap-3 border border-neon bg-void p-5 shadow-[0_0_20px_#39ff1433]">
+      <label className="label">
         Email
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          onBlur={() => handleBlur('email')}
-        />
-        {touched.email && errors.email && (
-          <span className="auth-error">{errors.email}</span>
-        )}
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={() => handleBlur('email')} className="field" />
+        {touched.email && errors.email && <span className="error-text">{errors.email}</span>}
       </label>
-      <label>
+      <label className="label">
         Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onBlur={() => handleBlur('password')}
-        />
-        {touched.password && errors.password && (
-          <span className="auth-error">{errors.password}</span>
-        )}
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} onBlur={() => handleBlur('password')} className="field" />
+        {touched.password && errors.password && <span className="error-text">{errors.password}</span>}
       </label>
-      {submitError && <span className="auth-error">{submitError}</span>}
-      <button type="submit" disabled={!isValid}>LOGIN</button>
+      {submitError && <span className="error-text">{submitError}</span>}
+      <button type="submit" disabled={!isValid || submitting} className="btn mt-1">
+        {submitting ? 'LOGGING IN...' : 'LOGIN'}
+      </button>
     </form>
   );
 }

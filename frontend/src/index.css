@@ -1,11 +1,55 @@
-html, body, #root {
-  height: 100%;
-  margin: 0;
+@import "@fontsource/space-grotesk/400.css";
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/700.css";
+@import "@fontsource/space-mono/400.css";
+@import "@fontsource/space-mono/700.css";
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Space Grotesk", sans-serif;
+  --font-serif: "Space Grotesk", sans-serif;
+  --font-mono: "Space Mono", monospace;
+
+  --color-void: #0d0d0d;
+  --color-panel: #151515;
+  --color-panel-2: #1d1d1d;
+  --color-edge: #2b2b2b;
+  --color-ink: #ececec;   
+  --color-mute: #8c8c8c;
+  --color-neon: #39ff14;      
+  --color-danger: #ff4d4d;
 }
-* { box-sizing: border-box; }
-body {
-  font-family: system-ui, -apple-system, sans-serif;
+
+@layer base {
+  html, body, #root { min-height: 100%; }
+  body {
+    @apply bg-void text-ink font-sans antialiased;
+  }
+  ::selection { background: var(--color-neon); color: var(--color-void); }
+  h1, h2, h3, h4 { @apply font-bold tracking-wide; }
+  a { @apply transition-colors; }
 }
-button {
-  font-family: inherit;
+
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 border border-neon bg-transparent px-4 py-2
+           text-xs font-bold uppercase tracking-widest text-neon cursor-pointer transition
+           hover:bg-neon hover:text-void disabled:cursor-not-allowed disabled:opacity-40;
+  }
+  .btn-solid { @apply bg-neon text-void hover:bg-transparent hover:text-neon; }
+  .btn-danger { @apply border-danger text-danger hover:bg-danger hover:text-void; }
+  .btn-ghost { @apply border-edge text-mute hover:border-ink hover:bg-transparent hover:text-ink; }
+
+  .field {
+    @apply w-full border border-edge bg-panel-2 px-3 py-2 text-sm text-ink outline-none transition
+           placeholder:text-mute focus:border-neon;
+  }
+  .label {
+    @apply flex flex-col gap-1 text-xs uppercase tracking-wider text-mute;
+  }
+  .panel { @apply border border-edge bg-panel p-4; }
+  .error-text { @apply text-xs text-danger; }
+  .notice { @apply border border-neon/40 bg-neon/10 px-3 py-2 text-xs text-neon; }
+  .tag { @apply font-mono text-xs text-neon hover:underline; }
 }

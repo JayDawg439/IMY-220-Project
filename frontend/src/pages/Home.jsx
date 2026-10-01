@@ -1,39 +1,73 @@
-import { useState } from 'react';
-import Header from '../components/Header';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import Layout from '../components/Layout';
 import SearchInput from '../components/SearchInput';
 import Feed from '../components/Feed';
-import { dummyPosts } from '../dummyData';
-import './Home.css';
+import { Loading, ErrorMessage } from '../components/Status';
+import { api } from '../lib/api';
+
+const TABS = [
+  { key: 'local', label: 'LOCAL', help: 'You and your friends' },
+  { key: 'global', label: 'GLOBAL', help: 'Everyone on Obscura Fulgur' },
+];
 
 function Home() {
-  const [activeTab, setActiveTab] = useState('friends');
+  const [params, setParams] = useSearchParams();
+  const tab = params.get('tab') === 'global' ? 'global' : 'local';
+  const q = params.get('q') || '';
 
-  const visiblePosts = dummyPosts.filter(p => p.feed === activeTab);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setError('');
+    api(`/posts?feed=${tab}${q ? `&q=${encodeURIComponent(q)}` : ''}`)
+      .then((data) => !cancelled && setPosts(data.posts))
+      .catch((err) => !cancelled && setError(err.message))
+      .finally(() => !cancelled && setLoading(false));
+    return () => { cancelled = true; };
+  }, [tab, q]);
+
+  const setTab = (key) => setParams({ tab: key, ...(q ? { q } : {}) });
+  const setQuery = (term) => setParams({ tab, ...(term ? { q: term } : {}) });
 
   return (
-    <div className="home-page">
-      <Header />
-      <main className="home-main">
-        <div className="home-topbar">
-          <div className="home-tabs">
+    <Layout>
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex gap-5">
+          {TABS.map((t) => (
             <button
-              className={activeTab === 'friends' ? 'tab active' : 'tab'}
-              onClick={() => setActiveTab('friends')}
+              key={t.key}
+              title={t.help}
+              onClick={() => setTab(t.key)}
+              className={`cursor-pointer border-b-2 px-1 py-1.5 text-sm font-bold tracking-widest transition ${
+                tab === t.key ? 'border-neon text-neon' : 'border-transparent text-mute hover:text-ink'
+              }`}
             >
-              FRIENDS
+              {t.label}
             </button>
-            <button
-              className={activeTab === 'adventure' ? 'tab active' : 'tab'}
-              onClick={() => setActiveTab('adventure')}
-            >
-              ADVENTURE
-            </button>
-          </div>
-          <SearchInput />
+          ))}
         </div>
-        <Feed posts={visiblePosts} />
-      </main>
-    </div>
+        <SearchInput key={q} initialValue={q} onSearch={setQuery} />
+      </div>
+
+      {q && <p className="mb-3 font-mono text-xs text-mute">Showing results for “{q}”</p>}
+
+      <ErrorMessage message={error} />
+      {loading ? (
+        <Loading />
+      ) : (
+        <Feed
+          posts={posts}
+          emptyText={
+            q ? 'No posts match your search.' : tab === 'local' ? 'Nothing here yet. Add some friends or make a post!' : 'No posts yet.'
+          }
+        />
+      )}
+    </Layout>
   );
 }
 

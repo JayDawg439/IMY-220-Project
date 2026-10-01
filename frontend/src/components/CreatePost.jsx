@@ -1,39 +1,52 @@
 import { useState } from 'react';
-import './CreatePost.css';
+import { api } from '../lib/api';
+import { readImage } from '../lib/images';
 
-function CreatePost({ onCancel }) {
+function CreatePost({ onCreated, onCancel }) {
+  const [file, setFile] = useState(null);
   const [caption, setCaption] = useState('');
-  const [imageFile, setImageFile] = useState(null);
+  const [hashtags, setHashtags] = useState('');
+  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('New post submitted (stub):', { caption, imageFile });
+    if (!file) {
+      setError('Please choose an image.');
+      return;
+    }
+    setError('');
+    setSubmitting(true);
+    try {
+      const image = await readImage(file);
+      const data = await api('/posts', { method: 'POST', body: { image, caption, hashtags } });
+      onCreated(data.post);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
-    <form className="create-post" onSubmit={handleSubmit}>
-      <h3>New Post</h3>
-      <label>
+    <form onSubmit={handleSubmit} className="panel flex max-w-md flex-col gap-3">
+      <h3 className="text-lg text-neon">New Post</h3>
+      <label className="label">
         Image
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setImageFile(e.target.files[0])}
-          required
-        />
+        <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0] || null)} className="field file:mr-3 file:cursor-pointer file:border-0 file:bg-neon file:px-3 file:py-1 file:text-xs file:font-bold file:text-void" />
       </label>
-      <label>
+      <label className="label">
         Caption
-        <textarea
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
-          placeholder="Write a caption..."
-          rows={3}
-        />
+        <textarea value={caption} onChange={(e) => setCaption(e.target.value)} placeholder="Write a caption..." rows={3} maxLength={500} className="field" />
       </label>
-      <div className="create-post-actions">
-        <button type="submit">Post</button>
-        {onCancel && <button type="button" onClick={onCancel}>Cancel</button>}
+      <label className="label">
+        Hashtags
+        <input value={hashtags} onChange={(e) => setHashtags(e.target.value)} placeholder="#sunset #film" className="field" />
+      </label>
+      {error && <p className="error-text">{error}</p>}
+      <div className="flex gap-2">
+        <button type="submit" disabled={submitting} className="btn btn-solid">{submitting ? 'POSTING...' : 'POST'}</button>
+        <button type="button" onClick={onCancel} className="btn btn-ghost">CANCEL</button>
       </div>
     </form>
   );

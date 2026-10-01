@@ -1,0 +1,7 @@
+MongoDB Atlas connection string (paste your real one here before submitting):
+
+mongodb+srv://<username>:<password>@<cluster-host>.mongodb.net/obscura?retryWrites=true&w=majority
+
+Database name: obscura
+Collections: users, posts, comments, albums, reports, reportReasons, friendRequests
+The same string must also be in backend/.env as MONGO_URI.

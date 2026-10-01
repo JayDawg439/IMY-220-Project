@@ -1,39 +1,53 @@
 import { useState } from 'react';
-import './EditProfileForm.css';
+import { api } from '../lib/api';
+import { readImage } from '../lib/images';
 
-function EditProfileForm({ user, onCancel }) {
-  const [name, setName] = useState(user.name);
-  const [pronouns, setPronouns] = useState(user.pronouns);
-  const [bio, setBio] = useState(user.bio);
-  const [links, setLinks] = useState(user.links);
+function EditProfileForm({ user, onSaved, onCancel }) {
+  const [form, setForm] = useState({
+    name: user.name,
+    username: user.username,
+    pronouns: user.pronouns || '',
+    bio: user.bio || '',
+    links: user.links || '',
+  });
+  const [file, setFile] = useState(null);
+  const [error, setError] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const set = (field) => (e) => setForm((f) => ({ ...f, [field]: e.target.value }));
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Profile update submitted (stub):', { name, pronouns, bio, links });
+    setError('');
+    setSubmitting(true);
+    try {
+      const body = { ...form };
+      if (file) body.avatar = await readImage(file, 400, 0.85);
+      const data = await api(`/users/${user.id}`, { method: 'PUT', body });
+      onSaved(data.user);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
-    <form className="edit-profile-form" onSubmit={handleSubmit}>
-      <h3>Edit Profile</h3>
-      <label>
-        Name
-        <input value={name} onChange={(e) => setName(e.target.value)} required />
+    <form onSubmit={handleSubmit} className="panel flex max-w-md flex-col gap-3">
+      <h3 className="text-lg text-neon">Edit Profile</h3>
+      <label className="label">Name<input value={form.name} onChange={set('name')} required maxLength={60} className="field" /></label>
+      <label className="label">Username<input value={form.username} onChange={set('username')} required className="field" /></label>
+      <label className="label">Pronouns<input value={form.pronouns} onChange={set('pronouns')} maxLength={30} className="field" /></label>
+      <label className="label">Bio<textarea value={form.bio} onChange={set('bio')} rows={3} maxLength={300} className="field" /></label>
+      <label className="label">Links<input value={form.links} onChange={set('links')} maxLength={200} className="field" /></label>
+      <label className="label">
+        Profile picture (optional)
+        <input type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0] || null)} className="field file:mr-3 file:cursor-pointer file:border-0 file:bg-neon file:px-3 file:py-1 file:text-xs file:font-bold file:text-void" />
       </label>
-      <label>
-        Pronouns
-        <input value={pronouns} onChange={(e) => setPronouns(e.target.value)} />
-      </label>
-      <label>
-        Bio
-        <textarea value={bio} onChange={(e) => setBio(e.target.value)} rows={3} />
-      </label>
-      <label>
-        Links
-        <input value={links} onChange={(e) => setLinks(e.target.value)} />
-      </label>
-      <div className="edit-profile-actions">
-        <button type="submit">Save</button>
-        {onCancel && <button type="button" onClick={onCancel}>Cancel</button>}
+      {error && <p className="error-text">{error}</p>}
+      <div className="flex gap-2">
+        <button type="submit" disabled={submitting} className="btn btn-solid">{submitting ? 'SAVING...' : 'SAVE'}</button>
+        <button type="button" onClick={onCancel} className="btn btn-ghost">CANCEL</button>
       </div>
     </form>
   );
