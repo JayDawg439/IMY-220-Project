@@ -5,3 +5,5 @@ mongodb+srv://<username>:<password>@<cluster-host>.mongodb.net/obscura?retryWrit
 Database name: obscura
 Collections: users, posts, comments, albums, reports, reportReasons, friendRequests
 The same string must also be in backend/.env as MONGO_URI.
+
+JWT = v6SWAwludQl65DRZ4Gvl7fQ9lnjtQ4JQQvtR6mFk6Pj

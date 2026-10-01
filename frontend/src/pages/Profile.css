@@ -57,16 +57,16 @@
   width: 90px;
 }
 
-.profile-table-toggle {
+.table-toggle {
   cursor: pointer;
   user-select: none;
 }
 
-.profile-table-toggle:hover {
+.table-toggle:hover {
   text-decoration: underline;
 }
 
-.profile-table-toggle.active {
+.table-toggle.active {
   color: #1a1a1a;
   background: #d0d0d0;
 }
@@ -76,7 +76,7 @@
   gap: 8px;
 }
 
-.profile-bio-links-col {
+.links-col {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -87,7 +87,7 @@
   min-width: 0;
 }
 
-.profile-bio-links-label {
+.links-label {
   font-weight: 700;
   font-size: 12px;
 }
@@ -107,7 +107,7 @@
   font-size: 12px;
 }
 
-.profile-photo-grid {
+.photo-grid {
   flex: 1;
   min-width: 280px;
   display: grid;

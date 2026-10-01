@@ -8,23 +8,23 @@
   color: inherit;
 }
 
-.profile-preview-avatar {
+.user-avatar {
   width: 40px;
   height: 40px;
   border-radius: 50%;
 }
 
-.profile-preview-info {
+.user-info {
   display: flex;
   flex-direction: column;
   font-size: 13px;
 }
 
-.profile-preview-name {
+.user-name {
   font-weight: 600;
 }
 
-.profile-preview-pronouns {
+.user-pronouns {
   color: #666;
   font-size: 11px;
 }
