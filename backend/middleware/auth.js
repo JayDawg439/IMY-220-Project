@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const users = require('../db/users');
 const { HttpError } = require('../utils/errors');
 
-const JWT_SECRET = () => process.env.JWT_SECRET || 'dev-only-secret-change-me';
+const JWT_SECRET = () => process.env.JWT_SECRET;
 
 const signToken = (userId) => jwt.sign({ sub: String(userId) }, JWT_SECRET(), { expiresIn: '7d' });
 

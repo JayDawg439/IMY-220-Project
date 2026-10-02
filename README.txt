@@ -4,3 +4,6 @@ GitHub repo: https://github.com/JayDawg439/IMY-220-Project
 docker compose up --build
 
 Open:  http://localhost:5173
+
+alex@obscura.test
+password1238i
