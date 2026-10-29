@@ -22,7 +22,9 @@ app.use('/api/posts', require('./routes/posts'));
 app.use('/api/albums', require('./routes/albums'));
 app.use('/api/reports', require('./routes/reports'));
 
-app.use('/api', (req, res) => res.status(404).json({ error: 'Route not found.' }));
+app.use('/api', (req, res) => res.status(404).json({ 
+	error: 'Route not found.' 
+}));
 
 app.use((err, req, res, next) => {
 	if(err.type === 'entity.too.large'){

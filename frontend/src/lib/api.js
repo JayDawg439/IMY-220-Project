@@ -32,5 +32,7 @@ export async function api(path, { method = 'GET', body } = {}) {
 		error.status = res.status;
 		throw error;
 	}
+
 	return data;
+	
 }

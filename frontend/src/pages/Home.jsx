@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Layout from '../components/Layout';
+
 import SearchInput from '../components/SearchInput';
 import Feed from '../components/Feed';
 import { Loading, ErrorMessage } from '../components/Status';

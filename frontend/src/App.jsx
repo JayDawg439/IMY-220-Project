@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+
 import Splash from './pages/Splash';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
