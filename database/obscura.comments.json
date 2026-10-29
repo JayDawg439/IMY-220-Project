@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "6abe3febb10f658943cffc33"
+  },
+  "postId": {
+    "$oid": "6abe3febb10f658943cffc2c"
+  },
+  "authorId": {
+    "$oid": "6abe3febb10f658943cffc2a"
+  },
+  "text": "Where is this?",
+  "createdAt": {
+    "$date": "2026-09-29T23:11:39.483Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6abe416fb10f658943cffc3d"
+  },
+  "postId": {
+    "$oid": "6abe3febb10f658943cffc2d"
+  },
+  "authorId": {
+    "$oid": "6abe3febb10f658943cffc28"
+  },
+  "text": "hey",
+  "createdAt": {
+    "$date": "2026-10-01T11:18:07.344Z"
+  }
+}]

@@ -1,0 +1,145 @@
+[{
+  "_id": {
+    "$oid": "6abe3febb10f658943cffc35"
+  },
+  "ownerId": {
+    "$oid": "6abe3febb10f658943cffc28"
+  },
+  "name": "Mountain Days",
+  "description": "Everything shot above 2000m.",
+  "hashtags": [
+    "mountains",
+    "film"
+  ],
+  "postIds": [
+    {
+      "$oid": "6abe3febb10f658943cffc2c"
+    },
+    {
+      "$oid": "6abe3febb10f658943cffc2d"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-09-30T07:11:39.483Z"
+  },
+  "updatedAt": {
+    "$date": "2026-09-30T07:11:39.483Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6ae37246dcaa010aedfc6c4b"
+  },
+  "ownerId": {
+    "$oid": "6ae371ffdcaa010aedfc6c49"
+  },
+  "name": "Games",
+  "description": "Games I love",
+  "hashtags": [
+    "games"
+  ],
+  "postIds": [
+    {
+      "$oid": "6ae37261dcaa010aedfc6c4c"
+    },
+    {
+      "$oid": "6ae37238dcaa010aedfc6c4a"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-10-29T16:20:22.199Z"
+  },
+  "updatedAt": {
+    "$date": "2026-10-29T16:21:01.349Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6ae37327dcaa010aedfc6c4f"
+  },
+  "ownerId": {
+    "$oid": "6ae338dbedc86e9f74578eab"
+  },
+  "name": "Album",
+  "description": "",
+  "hashtags": [],
+  "postIds": [
+    {
+      "$oid": "6ae338f5edc86e9f74578eac"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-10-29T16:24:07.173Z"
+  },
+  "updatedAt": {
+    "$date": "2026-10-29T16:24:13.595Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6ae3735bdcaa010aedfc6c50"
+  },
+  "ownerId": {
+    "$oid": "6ae3380cedc86e9f74578ea7"
+  },
+  "name": "Alby",
+  "description": "",
+  "hashtags": [],
+  "postIds": [
+    {
+      "$oid": "6ae3383fedc86e9f74578ea8"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-10-29T16:24:59.261Z"
+  },
+  "updatedAt": {
+    "$date": "2026-10-29T16:25:05.235Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6ae37387dcaa010aedfc6c51"
+  },
+  "ownerId": {
+    "$oid": "6ae3385fedc86e9f74578ea9"
+  },
+  "name": "Histroy",
+  "description": "",
+  "hashtags": [
+    "history"
+  ],
+  "postIds": [
+    {
+      "$oid": "6ae338c0edc86e9f74578eaa"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-10-29T16:25:43.300Z"
+  },
+  "updatedAt": {
+    "$date": "2026-10-29T16:25:48.538Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6ae373b3dcaa010aedfc6c52"
+  },
+  "ownerId": {
+    "$oid": "6ae33914edc86e9f74578ead"
+  },
+  "name": "PRUSSIA",
+  "description": "",
+  "hashtags": [],
+  "postIds": [
+    {
+      "$oid": "6ae3393cedc86e9f74578eae"
+    }
+  ],
+  "createdAt": {
+    "$date": "2026-10-29T16:26:27.791Z"
+  },
+  "updatedAt": {
+    "$date": "2026-10-29T16:26:32.160Z"
+  }
+}]

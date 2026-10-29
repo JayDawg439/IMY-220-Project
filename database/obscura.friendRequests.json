@@ -1,0 +1,14 @@
+[{
+  "_id": {
+    "$oid": "6abe3febb10f658943cffc2b"
+  },
+  "from": {
+    "$oid": "6abe3febb10f658943cffc2a"
+  },
+  "to": {
+    "$oid": "6abe3febb10f658943cffc28"
+  },
+  "createdAt": {
+    "$date": "2026-10-01T08:11:39.483Z"
+  }
+}]

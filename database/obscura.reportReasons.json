@@ -1,0 +1,60 @@
+[{
+  "_id": {
+    "$oid": "6abe3febb10f658943cffc38"
+  },
+  "label": "Inappropriate content",
+  "labelLower": "inappropriate content",
+  "createdAt": {
+    "$date": "2026-09-27T07:11:39.483Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6abe3febb10f658943cffc3a"
+  },
+  "label": "Copyright infringement",
+  "labelLower": "copyright infringement",
+  "createdAt": {
+    "$date": "2026-09-27T07:11:39.483Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6abe3febb10f658943cffc3b"
+  },
+  "label": "Other",
+  "labelLower": "other",
+  "createdAt": {
+    "$date": "2026-09-27T07:11:39.483Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6abe3febb10f658943cffc39"
+  },
+  "label": "Harassment",
+  "labelLower": "harassment",
+  "createdAt": {
+    "$date": "2026-09-27T07:11:39.483Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6abe3febb10f658943cffc37"
+  },
+  "label": "Spam",
+  "labelLower": "spam",
+  "createdAt": {
+    "$date": "2026-09-27T07:11:39.483Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "6abf4557f195cd5321fa0d10"
+  },
+  "label": "reason",
+  "labelLower": "reason",
+  "createdAt": {
+    "$date": "2026-10-02T05:47:03.480Z"
+  }
+}]
